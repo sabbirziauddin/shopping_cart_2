@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            font: 15px normal Arial, sans-serif;
+            color: #000000;
+        }
+        label {
+            width: 5em;
+            display: inline-block;
+        }
+        ul {
+            padding: 0;
+        }
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    <ul>
+        <% cartEntries.forEach(entry => { %>
+        <li><%= entry.amount %>x <%= entry.name %> <form method="POST" action="/"><input type="hidden" name="id" value="<%= entry.id %>"><input type="hidden" name="action" value="delete"><button type="submit">delete</button></form></li>
+        <% }) %>
+    </ul>
+    </form>
+    <hr>
+    <img src="cart.gif">
+    <hr>
+    <form method="POST" action="/">
+        <label for="name">Name</label> <input id="name" type="text" name="name" placeholder="Name"><br>
+        <label for="amount">Amount</label> <input id="amount" type="number" name="amount" placeholder="Amount"><br>
+        <input type="hidden" name="action" value="add">
+        <button type="submit">Add entry</button>
+    </form>
+</body>
+</html>

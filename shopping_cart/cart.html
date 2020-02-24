@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            font: 15px normal Arial, sans-serif;
+            color: #000000;
+        }
+        label {
+            width: 5em;
+            display: inline-block;
+        }
+        ul {
+            padding: 0;
+        }
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    <ul>
+    </ul>
+    <hr>
+    <img src="cart.gif">
+    <hr>
+    <form method="POST" action="/">
+        <label for="name">Name</label> <input id="name" type="text" name="name" placeholder="Name"><br>
+        <label for="amount">Amount</label> <input id="amount" type="number" name="amount" placeholder="Amount"><br>
+        <input type="hidden" name="action" value="add">
+        <button type="submit">Add entry</button>
+    </form>
+    <script>
+        document.querySelector('form').addEventListener('submit', addNewEntry);
+
+        function addNewEntry(event) {
+            event.preventDefault();
+
+            var name = document.getElementById('name').value;
+            var amount = document.getElementById('amount').value;
+            var newEntry = { 'name': name, 'amount': amount };
+
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'json';
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    addItem(this.response);
+                }
+            }
+            xhr.open('POST', '/cart', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(newEntry));
+        }
+
+        function retrieveItems() {
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'json';
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    this.response.forEach(function(item) { addItem(item); });
+                }
+            }
+            xhr.open('GET', '/cart', true);
+            xhr.send();
+        }
+
+        function addItem(item) {
+            var li = document.createElement('li');
+            li.innerHTML = item.amount + 'x ' + item.name;
+            document.querySelector('ul').appendChild(li);
+        }
+
+    </script>
+</body>
+</html>

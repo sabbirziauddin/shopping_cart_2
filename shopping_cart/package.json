@@ -1,0 +1,17 @@
+{
+  "name": "evs4",
+  "version": "1.0.0",
+  "description": "Node.js webserver to show classic vs. async web model",
+  "main": "node_server.js",
+  "scripts": {
+    "start": "node node_server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Krug",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}
